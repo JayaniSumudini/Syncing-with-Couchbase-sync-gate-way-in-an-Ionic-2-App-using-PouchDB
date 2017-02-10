@@ -16,8 +16,12 @@ npm install pouchdb --save
 ```
 npm install @types/pouchdb --save --save-exact
 ```
-4)install couchbase sync gateway 
-5)edit serviceconfig..json file
+4)
+```
+install couchbase sync gateway 
+```
+5)edit serviceconfig.json file
+```
 {
   "log":["CRUD+", "REST+", "Changes+", "Attach+" , "HTTP+"],
       "interface":":4984",
@@ -52,7 +56,7 @@ npm install @types/pouchdb --save --save-exact
     }
   }
 }
-
+```
 5)
 ```
 ionic serve
