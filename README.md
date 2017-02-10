@@ -1,3 +1,4 @@
+#Jayani sumudini (jayanisumudini@gmail.com)
 How to use this Project:
 
 #Syncing-with-Couchbase-sync-gate-way-in-an-Ionic-2-App-using-PouchDB
@@ -44,7 +45,7 @@ install couchbase sync gateway
                 "GUEST": {
                     "disabled": false,
                     "admin_channels": ["*"]
-                }
+                }``
             },
 			"event_handlers": {
 				"document_changed": [{
