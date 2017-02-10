@@ -1,11 +1,23 @@
-# Syncing-with-Couchbase-sync-gate-way-in-an-Ionic-2-App-using-PouchDB
-clone project
+How to use this Project:
+
+#Syncing-with-Couchbase-sync-gate-way-in-an-Ionic-2-App-using-PouchDB
+
+## Getting Started
+
+1)clone project
+```
+git clone https://github.com/JayaniSumudini/Syncing-with-Couchbase-sync-gate-way-in-an-Ionic-2-App-using-PouchDB.git
+```
+2)
+```
 npm install pouchdb --save
+```
+3)
+```
 npm install @types/pouchdb --save --save-exact
-install couchbase sync gateway
-edit serviceconfig..json file
-
-
+```
+4)install couchbase sync gateway 
+5)edit serviceconfig..json file
 {
   "log":["CRUD+", "REST+", "Changes+", "Attach+" , "HTTP+"],
       "interface":":4984",
@@ -41,6 +53,8 @@ edit serviceconfig..json file
   }
 }
 
-
+5)
+```
 ionic serve
-start couchbase sync gateway
+```
+6)start couchbase sync gateway
