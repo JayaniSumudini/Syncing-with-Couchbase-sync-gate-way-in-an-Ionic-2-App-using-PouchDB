@@ -1,4 +1,4 @@
-#Jayani sumudini (jayanisumudini@gmail.com)
+#Jayani sumudini (jayanisumudini@gmail.com , https://www.linkedin.com/in/jayanisumudini)
 How to use this Project:
 
 #Syncing-with-Couchbase-sync-gate-way-in-an-Ionic-2-App-using-PouchDB
