@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      PouchDB w/ Ionic 2
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="insert()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+
+  <ion-card *ngFor="let todo of todos">
+    <ion-card-header>
+      {{todo.title}}
+    </ion-card-header>
+
+    <ion-card-content>
+      <button ion-button icon-only color="light" (click)="updateTodo(todo)">
+        <ion-icon name="create"></ion-icon>
+      </button>
+      <button ion-button icon-only color="light" (click)="deleteTodo(todo)">
+        <ion-icon name="close"></ion-icon>
+      </button>
+      <ion-checkbox checked="{{todo.completed}}" (click)="checkboxChanged(todo)" ></ion-checkbox>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
