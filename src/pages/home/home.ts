@@ -1,7 +1,6 @@
-import {Component,ChangeDetectorRef,NgZone} from "@angular/core";
+import {Component, ChangeDetectorRef} from "@angular/core";
 import {NavController, AlertController} from "ionic-angular";
 import {Todos} from "../../providers/todos";
-import * as Uuid from "uuid";
 
 
 @Component({
@@ -27,30 +26,38 @@ export class HomePage {
     });
   }
 
-  public onChange(change:any){
-    console.log("CHANGE",change.doc);
-    console.log("BEFORE",this.todos);
+  public onChange(change: any) {
+    console.log("CHANGE", change.doc);
+    console.log("before", this.todos);
 
     let newElement = true;
-    this.todos = this.todos.map((todo:any) => {
-      if (todo._id === change.doc._id){
+    let changedDoc = null;
+    let changedIndex = null;
+    this.todos = this.todos.map((todo, index) => {
+      if(todo._id === change.doc._id){
         todo = change.doc;
         newElement = false;
+        changedDoc = todo;
+        changedIndex = index;
       }
       return todo;
     });
-
+    if (change.deleted){
+      this.todos.splice(changedIndex, 1);
+    }
 
     if (newElement === true) {
       this.todos.push(change.doc);
     }
 
     this.changeDetectorRef.detectChanges();
+    console.log("AFTER", this.todos);
   }
+
   ionViewDidLoad() {
     this.todoService.getTodos().then((data) => {
       this.todos = data;
-      console.log("ionViewDidLoad" , this.todos);
+      console.log("ionViewDidLoad", this.todos);
     });
   }
 
@@ -70,31 +77,31 @@ export class HomePage {
         {
           text: 'Save',
           handler: data => {
-            setTimeout(() => {
+            // setTimeout(() => {
               this.todoService.createTodo({
-                  _id: new Date(),
-                  title: "1 : " + data.title,
-                  completed: false,
-                  type: "todo"
-                });
-            }, 10);
-
-            setTimeout(() => {
-              this.todoService.createTodo({
-                  _id: new Date(),
-                  title: "2 : " + data.title,
-                  completed: false,
-                  type: "todo"
-                });
-            }, 1000);
-            setTimeout(() => {
-              this.todoService.createTodo({
-                  _id: new Date(),
-                  title: "3 : " + data.title,
-                  completed: false,
-                  type: "todo"
-                });
-            }, 2000);
+                _id: new Date(),
+                title:data.title,
+                completed: false,
+                type: "todo"
+              });
+            // }, 10);
+            //
+            // setTimeout(() => {
+            //   this.todoService.createTodo({
+            //     _id: new Date(),
+            //     title: "2 : " + data.title,
+            //     completed: false,
+            //     type: "todo"
+            //   });
+            // }, 1000);
+            // setTimeout(() => {
+            //   this.todoService.createTodo({
+            //     _id: new Date(),
+            //     title: "3 : " + data.title,
+            //     completed: false,
+            //     type: "todo"
+            //   });
+            // }, 2000);
           }
         }
       ]
@@ -136,9 +143,12 @@ export class HomePage {
     prompt.present();
 
   }
+
   deleteTodo(todo) {
+
     this.todoService.deleteTodo(todo);
   }
+
   // checkboxChanged(todo) {
   //   console.log("before home todo" , this.todos);
   //
