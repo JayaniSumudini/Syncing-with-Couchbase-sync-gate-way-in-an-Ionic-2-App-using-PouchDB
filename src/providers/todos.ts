@@ -16,7 +16,6 @@ export class Todos{
   db: any;
   private readonly remote: string ;
 
-  private isInstantiated: boolean;
   private readonly SYNC_GATEWAY_URL = 'http://localhost:4984/todo';
   private readonly localDbName: string = 'todos';
   private listener: EventEmitter<any> = new EventEmitter();
@@ -29,119 +28,94 @@ export class Todos{
     this.db = new PouchDB(this.localDbName);
     this.db.setMaxListeners(20);
     this.remote = this.SYNC_GATEWAY_URL;
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", "http://localhost:4984/todo/", true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onreadystatechange = () => {
-      let options = {
-        live: true,
-        retry: true,
-        continuous: true,
-      };
-      this.db.sync(this.remote, options);
-
-      console.log("Sync success");
+    let options = {
+      live: true,
+      retry: true,
+      continuous: true,
     };
-    xhr.withCredentials = true;
-    xhr.send(JSON.stringify({"name": "jayani", "password": "password"}));
+    this.db.sync(this.remote, options);
 
 
   }
 
 
   getTodos() {
+    // alert("A");
     if (this.data) {
       return Promise.resolve(this.data);
     }
 
     return new Promise(resolve => {
-
-      this.db.allDocs({
-
-        include_docs: true
-
-      }).then((result) => {
-
+      this.db.allDocs({include_docs: true}).then((result) => {
         this.data = [];
 
-        let docs = result.rows.map((row) => {
-          this.data.push(row.doc);
-        });
-
+        let docs = result.rows.map((row) => this.data.push(row.doc));
         resolve(this.data);
 
-        this.db.changes({
-          live: true,
-          since: 'now',
-          include_docs: true
-        }).on('change', (change) => {
-          this.handleChange(change);
-        });
+        // this.db.changes({
+        //   live: true,
+        //   since: 'now',
+        //   include_docs: true
+        // }).on('change', (change) => {
+        //   this.handleChange(change);
+        // });
 
       }).catch((error) => {
-
         console.log(error);
-
       });
-
     });
   }
 
   createTodo(todo){
-    this.db.post(todo);
+    this.db.put(todo);
   }
 
   updateTodo(todo){
-    this.db.put(todo).catch((err) => {
-      console.log(err);
-    });
+    this.db.put(todo);
   }
 
   deleteTodo(todo){
-    this.db.remove(todo).catch((err) => {
-      console.log(err);
-    });
+    this.db.remove(todo);
   }
 
   handleChange(change){
-    console.log("change" , change);
-    let changedDoc = null;
-    let changedIndex = null;
-
-    this.data.forEach((doc, index) => {
-
-      if(doc._id === change.id){
-        changedDoc = doc;
-        changedIndex = index;
-      }
-
-    });
-
-    //A document was deleted
-    if(change.deleted){
-      this.data.splice(changedIndex, 1);
-      console.log("deleted");
-    }
-    else {
-
-      //A document was updated
-      if(changedDoc){
-        this.data[changedIndex] = change.doc;
-        console.log("updated");
-
-      }
-
-      //A document was added
-      else {
-        this.data.push(change.doc);
-        console.log("added");
-
-      }
-
-    }
-
-    return this.data;
+    // console.log("change" , change);
+    // let changedDoc = null;
+    // let changedIndex = null;
+    //
+    // this.data.forEach((doc, index) => {
+    //
+    //   if(doc._id === change.id){
+    //     changedDoc = doc;
+    //     changedIndex = index;
+    //   }
+    //
+    // });
+    //
+    // //A document was deleted
+    // if(change.deleted){
+    //   this.data.splice(changedIndex, 1);
+    //   console.log("deleted");
+    // }
+    // else {
+    //
+    //   //A document was updated
+    //   if(changedDoc){
+    //     this.data[changedIndex] = change.doc;
+    //     console.log("updated");
+    //
+    //   }
+    //
+    //   //A document was added
+    //   else {
+    //     this.data.push(change.doc);
+    //     console.log("added");
+    //
+    //   }
+    //
+    // }
+    //
+    // return this.data;
   }
 
   // checkboxChanged(todo){
