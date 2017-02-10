@@ -11,169 +11,103 @@ import * as Uuid from "uuid";
 export class HomePage {
 
   todos: any;
-  private readonly SYNC_GATEWAY_URL = 'http://localhost:4984/todo';
 
   constructor(public navCtrl: NavController,
               public todoService: Todos,
               public alertCtrl: AlertController,
-              public changeDetectorRef: ChangeDetectorRef,
-              private zone: NgZone) {
+              public changeDetectorRef: ChangeDetectorRef) {
 
   }
 
-  public ionViewDidEnter() {
-    this.todoService.sync();
-    this.todoService.getChangeListener().subscribe(data => {
-      for(let i = 0; i < data.change.docs.length; i++) {
-        this.zone.run(() => {
-          this.todos.push(data.change.docs[i]);
-        });
-      }
+  ionViewDidLoad() {
+    this.todoService.getTodos().then((data) => {
+
+      this.todos = data;
+      console.log("ionViewDidLoad" , this.todos);
     });
-    this.todoService.fetch().then(result => {
-      this.todos = [];
-      for(let i = 0; i < result.rows.length; i++) {
-        this.todos.push(result.rows[i].doc);
-      }
-    }, error => {
-      console.error(error);
-    });
+
   }
 
-  public insert() {
+  createTodo() {
+
     let prompt = this.alertCtrl.create({
-      title: 'Todo Items',
-      message: "Add a new item to the todo list",
+      title: 'Add',
+      message: 'What do you need to do?',
       inputs: [
         {
-          name: 'title',
-          placeholder: 'Title'
-        },
+          name: 'title'
+        }
       ],
       buttons: [
         {
-          text: 'Cancel',
-          handler: data => {}
+          text: 'Cancel'
         },
         {
           text: 'Save',
           handler: data => {
-            this.todoService.put({
-              type: "todo",
-              title: data.title ,
-              completed: false
-            }, Uuid.v4());
+            this.todoService.createTodo(
+              {
+                title: data.title,
+                completed: false,
+                type: "todo"
+              }
+              );
           }
         }
       ]
     });
+
     prompt.present();
+
   }
 
-  // ionViewDidLoad() {
-  //   this.todoService.getTodos().then((data) => {
-  //
-  //     this.todos = data;
-  //     console.log("ionViewDidLoad" , this.todos);
-  //   });
-  //
-  // }
-  //
-  //
-  //
-  // createTodo() {
-  //
-  //   let prompt = this.alertCtrl.create({
-  //     title: 'Add',
-  //     message: 'What do you need to do?',
-  //     inputs: [
-  //       {
-  //         name: 'title'
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Cancel'
-  //       },
-  //       {
-  //         text: 'Save',
-  //         handler: data => {
-  //           this.todoService.createTodo(
-  //             {
-  //               title: data.title,
-  //               completed: false,
-  //               type: "todo"
-  //             }
-  //             );
-  //         }
-  //       }
-  //     ]
-  //   });
-  //
-  //   prompt.present();
-  //
-  // }
-  //
-  //
-  //
-  // updateTodo(todo) {
-  //
-  //   let prompt = this.alertCtrl.create({
-  //     title: 'Edit',
-  //     message: 'Change your mind?',
-  //     inputs: [
-  //       {
-  //         name: 'title'
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Cancel'
-  //       },
-  //       {
-  //         text: 'Save',
-  //         handler: data => {
-  //           this.todoService.updateTodo({
-  //             _id: todo._id,
-  //             _rev: todo._rev,
-  //             title: data.title,
-  //             completed: todo.completed
-  //           });
-  //         }
-  //       }
-  //     ]
-  //   });
-  //
-  //   prompt.present();
-  // }
-  //
-  deleteTodo(todo) {
-    // // this.todoService.deleteTodo(todo);
-    // this.todoService.deleteTodo(todo);
-    // this.todoService.sync();
+  updateTodo(todo) {
+    console.log("todo.id", todo._id);
+    let prompt = this.alertCtrl.create({
+      title: 'Edit',
+      message: 'Change your mind?',
+      inputs: [
+        {
+          name: 'title'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.todoService.updateTodo({
+              _id: todo._id,
+              _rev: todo._rev,
+              title: data.title,
+              type: "todo",
+              completed: todo.completed
+            });
+          }
+        }
+      ]
+    });
+
+    prompt.present();
+
   }
-  //
+  deleteTodo(todo) {
+    this.todoService.deleteTodo(todo);
+  }
   // checkboxChanged(todo) {
   //   console.log("before home todo" , this.todos);
-  //   // this.todoService.checkboxChanged(todo);
   //
   //   this.todoService.checkboxChanged({
   //     _id: todo._id,
   //     _rev: todo._rev,
   //     title: todo.title,
+  //     type: "todo",
   //     completed: todo.completed
   //   });
   //   console.log("after home todo" , this.todos);
   //
-  //   // try {
-  //   //   this.changeDetectorRef.detectChanges();
-  //   //   console.log("wewfrwfwefwfwfwfewgfefe");
-  //   // } catch (err) {
-  //   //   console.log(err);
-  //   // }
-  //   // this.todoService.getTodos().then((data) => {
-  //   //   this.todos = data;
-  //   // });
   // }
 
 }

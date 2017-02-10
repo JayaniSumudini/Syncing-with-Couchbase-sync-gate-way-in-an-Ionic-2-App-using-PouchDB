@@ -1,12 +1,10 @@
-<ion-header>
-  <ion-navbar>
+<ion-header no-border>
+  <ion-navbar color="secondary">
     <ion-title>
-      PouchDB w/ Ionic 2
+      Todo app
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="insert()">
-        <ion-icon name="add"></ion-icon>
-      </button>
+      <button ion-button icon-only (click)="createTodo()"><ion-icon name="cloud-upload"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -25,7 +23,8 @@
       <button ion-button icon-only color="light" (click)="deleteTodo(todo)">
         <ion-icon name="close"></ion-icon>
       </button>
-      <ion-checkbox checked="{{todo.completed}}" (click)="checkboxChanged(todo)" ></ion-checkbox>
+      <ion-icon *ngIf="todo.completed" name="ios-checkmark-circle" item-left></ion-icon>
+      <ion-icon *ngIf="!todo.completed" name="ios-checkmark-circle-outline" item-left></ion-icon>
     </ion-card-content>
   </ion-card>
 
