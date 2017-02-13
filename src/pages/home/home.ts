@@ -77,12 +77,127 @@ export class HomePage {
         {
           text: 'Save',
           handler: data => {
+            setTimeout(() => {
             this.todoService.createTodo({
               _id: new Date(),
-              title: data.title,
+              title: "1 : " + data.title,
               completed: false,
               type: "todo"
             });
+            }, 10);
+
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "2 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 100);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "3 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 250);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "4 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 500);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "5 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 750);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "6 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 1000);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "7 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 1250);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "8 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 1500);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "9 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 1750);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "10 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 2000);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "11 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 2250);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "12 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 2500);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "13 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 2750);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "14 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 3000);
+            setTimeout(() => {
+              this.todoService.createTodo({
+                _id: new Date(),
+                title: "15 : " + data.title,
+                completed: false,
+                type: "todo"
+              });
+            }, 3250);
           }
         }
       ]
