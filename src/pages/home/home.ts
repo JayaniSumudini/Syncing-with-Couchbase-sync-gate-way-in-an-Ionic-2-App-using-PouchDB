@@ -34,7 +34,7 @@ export class HomePage {
     let changedDoc = null;
     let changedIndex = null;
     this.todos = this.todos.map((todo, index) => {
-      if(todo._id === change.doc._id){
+      if (todo._id === change.doc._id) {
         todo = change.doc;
         newElement = false;
         changedDoc = todo;
@@ -42,7 +42,7 @@ export class HomePage {
       }
       return todo;
     });
-    if (change.deleted){
+    if (change.deleted) {
       this.todos.splice(changedIndex, 1);
     }
 
@@ -77,31 +77,12 @@ export class HomePage {
         {
           text: 'Save',
           handler: data => {
-            // setTimeout(() => {
-              this.todoService.createTodo({
-                _id: new Date(),
-                title:data.title,
-                completed: false,
-                type: "todo"
-              });
-            // }, 10);
-            //
-            // setTimeout(() => {
-            //   this.todoService.createTodo({
-            //     _id: new Date(),
-            //     title: "2 : " + data.title,
-            //     completed: false,
-            //     type: "todo"
-            //   });
-            // }, 1000);
-            // setTimeout(() => {
-            //   this.todoService.createTodo({
-            //     _id: new Date(),
-            //     title: "3 : " + data.title,
-            //     completed: false,
-            //     type: "todo"
-            //   });
-            // }, 2000);
+            this.todoService.createTodo({
+              _id: new Date(),
+              title: data.title,
+              completed: false,
+              type: "todo"
+            });
           }
         }
       ]
@@ -145,22 +126,8 @@ export class HomePage {
   }
 
   deleteTodo(todo) {
-
     this.todoService.deleteTodo(todo);
   }
 
-  // checkboxChanged(todo) {
-  //   console.log("before home todo" , this.todos);
-  //
-  //   this.todoService.checkboxChanged({
-  //     _id: todo._id,
-  //     _rev: todo._rev,
-  //     title: todo.title,
-  //     type: "todo",
-  //     completed: todo.completed
-  //   });
-  //   console.log("after home todo" , this.todos);
-  //
-  // }
 
 }
